@@ -57,6 +57,55 @@ var _ = Describe("Legacy Options", func() {
 				},
 			}
 
+			opts.InjectRequestHeaders = []Header{
+				{
+					Name:                 "X-Forwarded-Groups",
+					PreserveRequestValue: false,
+					Values: []HeaderValue{
+						{
+							ClaimSource: &ClaimSource{
+								Claim: "groups",
+							},
+						},
+					},
+				},
+				{
+					Name:                 "X-Forwarded-User",
+					PreserveRequestValue: false,
+					Values: []HeaderValue{
+						{
+							ClaimSource: &ClaimSource{
+								Claim: "user",
+							},
+						},
+					},
+				},
+				{
+					Name:                 "X-Forwarded-Email",
+					PreserveRequestValue: false,
+					Values: []HeaderValue{
+						{
+							ClaimSource: &ClaimSource{
+								Claim: "email",
+							},
+						},
+					},
+				},
+				{
+					Name:                 "X-Forwarded-Preferred-Username",
+					PreserveRequestValue: false,
+					Values: []HeaderValue{
+						{
+							ClaimSource: &ClaimSource{
+								Claim: "preferred_username",
+							},
+						},
+					},
+				},
+			}
+
+			opts.InjectResponseHeaders = []Header{}
+
 			converted, err := legacyOpts.ToOptions()
 			Expect(err).ToNot(HaveOccurred())
 			Expect(converted).To(Equal(opts))
